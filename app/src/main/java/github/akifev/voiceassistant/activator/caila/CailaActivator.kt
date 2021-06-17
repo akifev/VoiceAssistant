@@ -4,8 +4,10 @@ import com.justai.jaicf.activator.caila.CailaIntentActivator
 import com.justai.jaicf.activator.caila.CailaNLUSettings
 import github.akifev.voiceassistant.BuildConfig
 
-fun createCailaActivator(): CailaIntentActivator.Factory {
-    val accessToken = BuildConfig.JAICP_API_TOKEN
+private val jaicpApiToken = BuildConfig.JAICP_API_TOKEN
 
-    return CailaIntentActivator.Factory(CailaNLUSettings(accessToken))
+val cailaNLUSettings = CailaNLUSettings(jaicpApiToken)
+
+fun createCailaActivator(): CailaIntentActivator.Factory {
+    return CailaIntentActivator.Factory(cailaNLUSettings)
 }

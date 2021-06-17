@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 29
 
     def keystorePropertiesFile = rootProject.file("./app/src/main/res/keystore.properties")
     def keystoreProperties = new Properties()
@@ -12,13 +12,14 @@ android {
     defaultConfig {
         applicationId "github.akifev.voiceassistant"
         minSdkVersion 22
-        targetSdkVersion 30
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "JAICP_API_TOKEN", keystoreProperties["JAICP_API_TOKEN"]
+        buildConfigField "String", "OPENWEATHER_API_TOKEN", keystoreProperties["OPENWEATHER_API_TOKEN"]
     }
 
     buildTypes {
@@ -31,6 +32,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
     }
 
     kotlinOptions.jvmTarget = "1.8"
@@ -55,17 +62,23 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.31"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.just-ai.aimybox:components:0.16.4'
-    implementation 'com.just-ai.aimybox:core:0.16.4'
-    implementation 'com.just-ai.aimybox:google-platform-speechkit:0.16.4'
-    implementation 'com.just-ai.aimybox:jaicf-api:0.16.4'
+    implementation 'com.just-ai.aimybox:components:0.16.0'
+    implementation 'com.just-ai.aimybox:core:0.16.0'
+    implementation 'com.just-ai.aimybox:google-platform-speechkit:0.16.0'
+    implementation 'com.just-ai.aimybox:jaicf-api:0.16.0'
 
     implementation 'com.just-ai.jaicf:caila:1.0.0'
+
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
 }
